@@ -1,5 +1,5 @@
-from src import data_preparation as data_prep
-from src.data_classes import GDPData, GDPMetadata, IEAData
+from . import data_preparation as data_prep
+from .data_classes import GDPData, GDPMetadata, IEAData
 
 import numpy as np
 import pandas as pd
@@ -74,7 +74,8 @@ def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data
 
     scatter.update_traces(textposition="middle center")
 
-    scatter.update_layout(plot_bgcolor='white', uniformtext_minsize=12, uniformtext_mode='hide')
+    scatter.update_layout(plot_bgcolor='white', uniformtext_minsize=12, uniformtext_mode='hide', font_family="Arial",
+                          font_color='black')
 
     scatter.update_xaxes(
         mirror=False,
@@ -93,7 +94,7 @@ def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data
 
     scatter.add_annotation(dict(font=dict(color='black', size=11),
                                 x=0,
-                                y=1.15,
+                                y=1.12,
                                 showarrow=False,
                                 text="Based on World Bank and IEA data.<br>CC 4.0 License",
                                 textangle=0,

@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.data_classes import IEAData, GDPData
+from .data_classes import IEAData, GDPData
 
 
 def create_energy_dict(flows: list[str], products: list[str],

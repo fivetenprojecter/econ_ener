@@ -1,5 +1,6 @@
+import os
 import pandas as pd
-from src.data_classes import GDPMetadata
+from .data_classes import GDPMetadata
 
 
 def build_long_name_interpreter(parser_func, edge_cases: dict[str]):
@@ -51,7 +52,8 @@ def build_GDPMetadata_parser_func(metadata: GDPMetadata):
     """
 
     def load_edge_cases():
-        filepath = './data/iea_name_edge_cases.txt'
+        filepath = os.path.join(os.path.dirname(__file__), '../data/iea_name_edge_cases.txt')
+        print(filepath)
         return pd.read_csv(filepath, sep='\t+', engine='python', header=0, index_col=0).to_dict()['Official Name']
 
     def parser_func(long_name, verbose):

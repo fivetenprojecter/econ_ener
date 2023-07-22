@@ -1,13 +1,13 @@
-from os.path import join, split
+from .src import interpreters as interp
+from .src.data_classes import GDPMetadata, GDPData, IEAData
 
-from src.data_classes import GDPMetadata, GDPData, IEAData
-import src.interpreters as interp
-from src.plots import *
+import os
+from os.path import join, split
 
 
 def load_data():
     """ Load the economic and energy data """
-    data_directory = '.\data'
+    data_directory = join(os.path.dirname(__file__), 'data')
 
     # [ECONOMIC DATA] GDP METADATA AND DATA
     # Path definitions
@@ -25,15 +25,5 @@ def load_data():
     lni = interp.build_long_name_interpreter(parser_func, edge_cases)
 
     nrg_data = IEAData(filepath_iea_data, long_name_interpreter=lni)
+
     return gdp, gdp_md, nrg_data
-
-
-def main():
-    gdp, gdp_md, nrg_data = load_data()
-    fig = electricity_plot(2020, gdp, gdp_md, nrg_data)
-
-    print('bob')
-
-
-if __name__ == '__main__':
-    main()
