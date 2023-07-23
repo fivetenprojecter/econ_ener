@@ -21,7 +21,7 @@ def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data
     plot_country_codes = nrg_data.available_country_codes
     plot_country_codes.remove('WLD')
 
-    colloquial_names = data_prep.generate_colloquial_name_list(plot_country_codes, nrg_data)
+    colloquial_names = data_prep.create_colloquial_name_list(plot_country_codes, nrg_data)
     gdp_variable = 'GDP per capita (constant 2015 US$)'
     gdp_list = data_prep.create_gdp_dict([gdp_variable], plot_country_codes, plot_year, gdp)[gdp_variable]
     electricity_lists = data_prep.create_electricity_dict(plot_country_codes, plot_year, nrg_data)

@@ -52,7 +52,7 @@ def build_GDPMetadata_parser_func(metadata: GDPMetadata):
     """
 
     def load_edge_cases():
-        filepath = os.path.join(os.path.dirname(__file__), '../data/iea_name_edge_cases.txt')
+        filepath = os.path.join(os.path.dirname(__file__), '../data/country_name_edge_cases.txt')
         print(filepath)
         return pd.read_csv(filepath, sep='\t+', engine='python', header=0, index_col=0).to_dict()['Official Name']
 

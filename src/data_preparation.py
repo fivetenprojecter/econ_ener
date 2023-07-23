@@ -11,7 +11,7 @@ def create_energy_dict(flows: list[str], products: list[str],
         :arg
             | flows (list[str]): list of all flows to return in the results dictionary
             | products (list[str]): list of all products to return for each flow in the results dictionary
-            | plot_country_codes (list[str]): list of 3-digit country codes for which to query results
+            | country_codes (list[str]): list of 3-digit country codes for which to query results
             | plot_year (int): year at which to query
             | iea (IEAData): energy data set
         :returns
@@ -42,20 +42,20 @@ def get_electricity_makeup() -> (list[str], list[str]):
     return flows, products
 
 
-def create_electricity_dict(plot_country_codes: list[str], plot_year: int, iea: IEAData) -> dict[list[float]]:
+def create_electricity_dict(country_codes: list[str], plot_year: int, iea: IEAData) -> dict[list[float]]:
     """ Wrapper for create_energy_dict to get the energy_dict for electricity production only. """
     flows, products = get_electricity_makeup()
-    return create_energy_dict(flows, products, plot_country_codes, plot_year, iea)[flows[0]]
+    return create_energy_dict(flows, products, country_codes, plot_year, iea)[flows[0]]
 
 
 def create_gdp_dict(gdp_variables: list[str],
-                    plot_country_codes: list[str], plot_year: int,
+                    country_codes: list[str], plot_year: int,
                     gdp: GDPData) -> dict[list[float]]:
     """ Create a dict with keys matching GDP sets in the World Bank data set
 
         :arg
             | gdp_variables (list[str]): list of all GDP variables to return in the results dictionary
-            | plot_country_codes (list[str]): list of 3-digit country codes for which to query results
+            | country_codes (list[str]): list of 3-digit country codes for which to query results
             | plot_year (int): year at which to query
             | gdp (GDPData): GDP data set
         :returns
@@ -66,7 +66,7 @@ def create_gdp_dict(gdp_variables: list[str],
     gdp_dict = {gdp_variable: [] for gdp_variable in gdp_variables}
 
     for gdp_variable in gdp_variables:
-        for country_code in plot_country_codes:
+        for country_code in country_codes:
             years, vals = gdp.create_timeseries_for_country_by_series_name(country_code, gdp_variable)
             gdp_dict[gdp_variable].extend(vals[years == plot_year])
         gdp_dict[gdp_variable] = np.array(gdp_dict[gdp_variable])
@@ -74,7 +74,7 @@ def create_gdp_dict(gdp_variables: list[str],
     return gdp_dict
 
 
-def generate_colloquial_name_list(plot_country_codes: list[str], iea: IEAData) -> list[str]:
-    """ Create a list of colloquial names to use when hovering """
-    return [iea.get_colloquial_name(country_code) for country_code in plot_country_codes]
+def create_colloquial_name_list(country_codes: list[str], iea: IEAData) -> list[str]:
+    """ Create a list of colloquial names based on list of country codes provided """
+    return [iea.get_colloquial_name(country_code) for country_code in country_codes]
 
