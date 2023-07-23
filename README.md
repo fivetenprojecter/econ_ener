@@ -12,8 +12,8 @@ III. Finally, __src.plots__ contains plot-generation functions that make use of 
 - __load_data__
   - returns __src.data_classes.WorldDataHandler__ sub-class instances containing the GDP, GDP-metadata, and energy data
 - __test_plot__
-  - draw a sample plot to demonstrate the package
-![](test_plot.html)
+  - draws an interactive [sample plot](https://fivetenprojecter.github.io/) to demonstrate the package
+
 ## data
 Contains sample data to illustrate the functionality of the package
   - based on data compiled by the IEA and World Bank, available under Creative Commons 4.0

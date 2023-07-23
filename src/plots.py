@@ -14,6 +14,11 @@ def create_figure_widget(figure: go.Figure) -> go.FigureWidget:
 
 def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data: IEAData):
     """ Plots fraction of renewables as a function of GDP per capita (2015 US$) for a given plot year """
+    #TODO:
+    # - [ ] Turn tooltip into something more palatable
+    #   - check out how hard subplot implementation would be
+    # - [ ] Generalize bubble plot generation
+    # - [ ] Generalize styling
 
     # DATA PREPARATION
     # ------------------------------------------------------------------------------------------------------------------
