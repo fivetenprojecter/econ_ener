@@ -33,7 +33,7 @@ The _src_ sub-package contains all the under-the-hood functionality to the packa
 - provides interpretation between the country names used in different data sets
 - built around __build_long_name_interpreter__, which creates a function converting a given country name into a 3-digit country code
   - returns __long_name_interpreter__: this function takes two args, the first being the country name to be interpreted and the second a boolean to 
-    enable command line output of the interpretation process (recommended to prevent misallocations of data)
+    enable command line output of the interpretation process (recommended to prevent data misallocation)
   - __build_long_name_interpreter__ takes two args
     - the first is a __parser_func__, which has identical args to __long_name_interpreter__ and performs the interpretation
     - the second arg is _edge_cases_, a dict[str]
