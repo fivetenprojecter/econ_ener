@@ -74,8 +74,7 @@ def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data
 
     scatter.update_traces(textposition="middle center")
 
-    scatter.update_layout(plot_bgcolor='white', uniformtext_minsize=12, uniformtext_mode='hide', font_family="Arial",
-                          font_color='black')
+    scatter.update_layout(plot_bgcolor='white', font_family="Arial", font_color='black', font_size=14, title_font_size=20)
 
     scatter.update_xaxes(
         mirror=False,
@@ -94,24 +93,24 @@ def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data
 
     scatter.add_annotation(dict(font=dict(color='black', size=11),
                                 x=0,
-                                y=1.12,
+                                y=0,
                                 showarrow=False,
-                                text="Based on World Bank and IEA data.<br>CC 4.0 License",
+                                text="Based on World Bank and IEA data.<br>Creative Commons 4.0 License",
                                 textangle=0,
                                 xanchor='left',
                                 align='left',
-                                xref="paper",
-                                yref="paper"))
+                                xref="x domain",
+                                yref="y domain"))
 
     scatter.add_annotation(dict(font=dict(color='black', size=14),
-                                x=1,
+                                x=0.02,
                                 y=1.05,
                                 showarrow=False,
                                 text="Bubble size based on total electricity production.",
                                 textangle=0,
-                                xanchor='right',
-                                align='right',
-                                xref="paper",
-                                yref="paper"))
+                                xanchor='left',
+                                align='left',
+                                xref="x domain",
+                                yref="y domain"))
 
     return scatter
