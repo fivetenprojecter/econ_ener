@@ -148,7 +148,8 @@ def total_energy_supply_plot(plot_year: int, plot_country_codes: list[str], gdp:
                                               [fossil_products, nuclear_products, heat_products, elec_products,
                                                renew_products]]
 
-        # Remove the net electricity supply -> secondary source, does not contribute to overall supply
+        # Total energy supply minus the net electricity supply
+        # -> secondary source, does not contribute to overall supply
         total = energy_dict['Total'][idx] - elec
 
         info_dict = {'Fossil': fossil / total,
