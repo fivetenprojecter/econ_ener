@@ -148,16 +148,18 @@ def total_energy_supply_plot(plot_year: int, plot_country_codes: list[str], gdp:
                                               [fossil_products, nuclear_products, heat_products, elec_products,
                                                renew_products]]
 
-        # Total energy supply minus the net electricity supply
+        # Total energy supply minus the net electricity supply if it is negative (predominantly exports, still counted towards
+        # a countries generation)
         # -> secondary source, does not contribute to overall supply
-        total = energy_dict['Total'][idx] - elec
+        total = energy_dict['Total'][idx]
+        # Add exported energy to a countries tally
+        if elec < 0:
+            total -= elec
 
         info_dict = {'Fossil': fossil / total,
                      'Nuclear': nuclear / total,
                      'Renewable & waste': renew / total,
-                     'Other (Heat, electricity import, etc.)': np.clip(
-                         total - nuclear - renew - fossil, 0,
-                         np.inf) / total}
+                     'Other (Heat, imported electricity, etc.)': np.clip(total - fossil - nuclear - renew) / total}
 
         custom_data_dict = {'mix_string': create_graph_string('Energy mix', info_dict), 'renew_deployed': renew / 1e3}
 
