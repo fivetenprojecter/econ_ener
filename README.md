@@ -1,5 +1,5 @@
 # econ_ener
- Python package to quickly compare economic and energy consumption data for state-level entities.
+Package to quickly compare economic and energy supply data for state-level entities.
 
 # Work flow
 I. The design idea behind the package is to use instances of __src.data_classes.WorldDataHandler__ to load and store data. 

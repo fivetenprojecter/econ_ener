@@ -199,7 +199,7 @@ def total_energy_supply_plot(plot_year: int, plot_country_codes: list[str], gdp:
     # STYLING
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------
     xlabel = 'GDP per capita (1000s of constant 2015 US$)'
-    ylabel = 'Renewable & waste fraction of total energy supply'
+    ylabel = 'Percentage of total energy supplied by renewable sources and waste-to-energy schemes'
     zlabel = 'total energy supply'
 
     x_tt, y_tt, z_tt = 'GDP per capita', 'Renewable & waste fraction', 'Total energy supply'
@@ -210,10 +210,11 @@ def total_energy_supply_plot(plot_year: int, plot_country_codes: list[str], gdp:
         'align': 'left'}
 
     oad['subtitle'] = {
-        'text': f'Fraction of total energy supply provided by renewable & waste in each country in {plot_year}' + \
-                ' [Source: <a href="https://www.iea.org/data-and-statistics/data-product/world-energy-balances-highlights">IEA</a> and ' + \
+        'text': f'Percentage of total energy supply provided by renewable sources (solar, wind, hydro, biofuels, etc.) ' +
+                ' and waste-to-energy schemes for select countries in {plot_year}' +
+                ' [Source: <a href="https://www.iea.org/data-and-statistics/data-product/world-energy-balances-highlights">IEA</a> and ' +
                 '<a href="https://databank.worldbank.org/reports.aspx?source=2&series=NY.GDP.MKTP.CD&country=#">World Bank</a>] <br>'
-                'Underlying code on <a href="https://github.com/fivetenprojecter/econ_ener">GitHub</a>.',
+                'Supporting code on <a href="https://github.com/fivetenprojecter/econ_ener">GitHub</a>.',
         'align': 'left'}
 
     # Legend
