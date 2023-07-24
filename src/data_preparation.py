@@ -1,4 +1,5 @@
 import numpy as np
+from functools import reduce
 
 from .data_classes import IEAData, GDPData
 
@@ -77,4 +78,21 @@ def create_gdp_dict(gdp_variables: list[str],
 def create_colloquial_name_list(country_codes: list[str], iea: IEAData) -> list[str]:
     """ Create a list of colloquial names based on list of country codes provided """
     return [iea.get_colloquial_name(country_code) for country_code in country_codes]
+
+
+def determine_common_values(array_list: list[list]) -> list:
+    """ Intersection between multiple arrays """
+    return reduce(np.intersect1d, array_list).tolist()
+
+
+def find_all_available_country_codes(gdp: GDPData, nrg_data: IEAData) -> list[str]:
+    """ Returns all available country codes that are present both provided data sets"""
+    return determine_common_values([gdp.available_country_codes, nrg_data.available_country_codes])
+
+
+def find_all_available_country_codes_and_sanitize(gdp: GDPData, nrg_data: IEAData) -> list[str]:
+    """ Returns all available country codes that are present both provided data sets, minus the WORLD code """
+    country_codes = determine_common_values([gdp.available_country_codes, nrg_data.available_country_codes])
+    country_codes.remove('WLD')
+    return country_codes
 

@@ -12,19 +12,55 @@ def create_figure_widget(figure: go.Figure) -> go.FigureWidget:
     return go.FigureWidget(figure)
 
 
-def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data: IEAData):
+def style_xy_axes(figure: go.Figure):
+    """ Style a figure object to match closer to the Carbon Brief aesthetic """
+
+    figure.update_layout(plot_bgcolor='white',
+                         font_family="Arial",
+                         font_color='black',
+                         font_size=14,
+                         title_font_size=20)
+
+    figure.update_xaxes(
+        mirror=False,
+        ticks='outside',
+        zeroline=True,
+        linecolor='black',
+        gridcolor='lightgrey'
+    )
+    figure.update_yaxes(
+        mirror=True,
+        ticks='outside',
+        showline=True,
+        linecolor=None,
+        gridcolor='lightgrey'
+    )
+
+
+def add_annotation(figure: go.Figure, x: float, y: float, text: str, fontcolor='black', fontsize=11):
+    """ Wrapper for figure.add_annotation from plotly.graph_objects """
+    figure.add_annotation(dict(font=dict(color=fontcolor, size=fontsize),
+                          x=x,
+                          y=y,
+                          showarrow=False,
+                          text=text,
+                          textangle=0,
+                          xanchor='left',
+                          align='left',
+                          xref="x domain",
+                          yref="y domain"))
+
+
+def electricity_plot(plot_year: int, plot_country_codes: list[str], gdp: GDPData, gdp_md: GDPMetadata, nrg_data: IEAData):
     """ Plots fraction of renewables as a function of GDP per capita (2015 US$) for a given plot year """
     #TODO:
     # - [ ] Turn tooltip into something more palatable
     #   - check out how hard subplot implementation would be
     # - [ ] Generalize bubble plot generation
-    # - [ ] Generalize styling
+    # - [DONE] Generalize styling
 
     # DATA PREPARATION
     # ------------------------------------------------------------------------------------------------------------------
-    # Get all plottable country codes
-    plot_country_codes = nrg_data.available_country_codes
-    plot_country_codes.remove('WLD')
 
     colloquial_names = data_prep.create_colloquial_name_list(plot_country_codes, nrg_data)
     gdp_variable = 'GDP per capita (constant 2015 US$)'
@@ -66,6 +102,7 @@ def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data
     hover_data['Size'] = False
     hover_data['Energy mix'] = True
     hover_data['Region'] = False
+    hover_data['label_text'] = False
 
     scatter = px.scatter(df, x='GDP per capita (2015 US$)', y='Renewable sources fraction (%)',
                          size='Total electricity consumption (GWh)',
@@ -81,41 +118,15 @@ def electricity_plot(plot_year: int, gdp: GDPData, gdp_md: GDPMetadata, nrg_data
 
     scatter.update_layout(plot_bgcolor='white', font_family="Arial", font_color='black', font_size=14, title_font_size=20)
 
-    scatter.update_xaxes(
-        mirror=False,
-        ticks='outside',
-        zeroline=True,
-        linecolor='black',
-        gridcolor='lightgrey'
-    )
-    scatter.update_yaxes(
-        mirror=True,
-        ticks='outside',
-        showline=True,
-        linecolor=None,
-        gridcolor='lightgrey'
-    )
+    # ANNOTATIONS
+    # ------------------------------------------------------------------------------------------------------------------
+    # Bubble size information
+    add_annotation(scatter, 0.02, 1.05, 'Bubble size indicates total electricity production.')
+    # Data source attribution
+    add_annotation(scatter, 0, 0, 'Based on World Bank and IEA data.<br>Creative Commons 4.0 License', fontsize=14)
 
-    scatter.add_annotation(dict(font=dict(color='black', size=11),
-                                x=0,
-                                y=0,
-                                showarrow=False,
-                                text="Based on World Bank and IEA data.<br>Creative Commons 4.0 License",
-                                textangle=0,
-                                xanchor='left',
-                                align='left',
-                                xref="x domain",
-                                yref="y domain"))
-
-    scatter.add_annotation(dict(font=dict(color='black', size=14),
-                                x=0.02,
-                                y=1.05,
-                                showarrow=False,
-                                text="Bubble size based on total electricity production.",
-                                textangle=0,
-                                xanchor='left',
-                                align='left',
-                                xref="x domain",
-                                yref="y domain"))
+    # STYLING
+    # ------------------------------------------------------------------------------------------------------------------
+    style_xy_axes(scatter)
 
     return scatter

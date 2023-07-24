@@ -6,7 +6,7 @@ I. The design idea behind the package is to use instances of __src.data_classes.
 
 II. These instances are then passed to functions within __src.data_preparation__ to be organized into structures that easily interface with _plotly_ and other plotting interfaces.
 
-III. Finally, __src.plots__ contains plot-generation functions that make use of the structures generated via __src.data_preparation__.
+III. Finally, __src.plots_plotly__ and src.plots_highcharts contain plot-generation functions that make use of the structures generated via __src.data_preparation__.
 # Package layout
 ## module functions
 - __load_data__
@@ -49,3 +49,7 @@ The _src_ sub-package contains all the under-the-hood functionality to the packa
   - __create_gdp_dict__: Create a dict with keys matching GDP sets in the World Bank data set
   - __create_colloquial_name_list__: Create a list of colloquial names based on list of country codes provided
   
+#### src.plots_plotly
+- sub-package for interactive plots using the __plotly__-package
+#### src.plots_highcharts
+- sub-package for interactive plots using __Highcharts__ 
